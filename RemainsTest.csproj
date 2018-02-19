@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: D:\GameDevProjectFile\Архив\mskvipdekor.ru\bin\RemainsTest.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CF11318C-8124-44E4-A50A-92E3C9D9F642}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>RemainsTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>RemainsTest</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Web" />
+    <Reference Include="NLog">
+      <HintPath>lib\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Core" />
+    <Reference Include="EntityFramework">
+      <HintPath>lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Helpers">
+      <HintPath>lib\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NReco.PdfGenerator">
+      <HintPath>lib\NReco.PdfGenerator.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RouteConfig.cs" />
+    <Compile Include="MvcApplication.cs" />
+    <Compile Include="Providers\SimpleMembership.cs" />
+    <Compile Include="Providers\CustomRoleProvider.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\LogOnModel.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Stock.cs" />
+    <Compile Include="Models\OrderViewModel.cs" />
+    <Compile Include="Models\OrderDetailView.cs" />
+    <Compile Include="Models\ProductCharModel.cs" />
+    <Compile Include="Models\ProductDetailsModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ShippingDetailsModel.cs" />
+    <Compile Include="Models\ShkModel.cs" />
+    <Compile Include="Models\StockModel.cs" />
+    <Compile Include="Models\UserCreateModel.cs" />
+    <Compile Include="Models\UserListModel.cs" />
+    <Compile Include="Models\EntityModel\Cart.cs" />
+    <Compile Include="Models\EntityModel\CartLine.cs" />
+    <Compile Include="Models\EntityModel\CartModelBinder.cs" />
+    <Compile Include="Models\EntityModel\Order.cs" />
+    <Compile Include="Models\EntityModel\OrderDetails.cs" />
+    <Compile Include="Models\EntityModel\ProductPrice.cs" />
+    <Compile Include="Models\EntityModel\TransportationCompanies.cs" />
+    <Compile Include="Models\EntityModel\ProductChars.cs" />
+    <Compile Include="Models\EntityModel\ProductCharRemains.cs" />
+    <Compile Include="Models\EntityModel\Role.cs" />
+    <Compile Include="Models\EntityModel\User.cs" />
+    <Compile Include="Models\EntityModel\DataContext.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
