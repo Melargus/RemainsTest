@@ -12,20 +12,8 @@ using System.Web.Routing;
 
 namespace RemainsTest
 {
-  public class MvcApplication : HttpApplication
+  public partial class MvcApplication : HttpApplication
   {
-    private static Logger logger = LogManager.GetCurrentClassLogger();
-
-    protected void Application_Start()
-    {
-      MvcApplication.logger.Info("App start");
-      AreaRegistration.RegisterAllAreas();
-      RouteConfig.RegisterRoutes(RouteTable.Routes);
-      ModelBinders.Binders.Add(typeof (Cart), (IModelBinder) new CartModelBinder());
-    }
-
-    protected void Session_Start()
-    {
-    }
+    
   }
 }
