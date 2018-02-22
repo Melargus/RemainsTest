@@ -1,0 +1,66 @@
+﻿@model RemainsTest.Models.EntityModel.Cart
+
+@{
+    ViewBag.Title = "Корзина";
+}
+
+<h2>Корзина</h2>
+
+@if (!Model.Lines.Any())
+{
+    <h2 class="text-center info">Ваша корзина пуста</h2>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">Товар</th>
+                <th class="text-center">Характеристика</th>
+                <th class="text-center">Штрихкод</th>
+                <th class="text-left">Разбивка</th>
+                <th class="text-right">Количество</th>
+                <th class="text-right">Цена</th>
+                <th class="text-right">Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var cl in Model.Lines)
+        {
+            <tr>
+                <td class="text-center">@cl.Product.ProductName</td>
+                <td class="text-center">@cl.ProductChar.ProductCharName</td>
+                <td class="text-center">@cl.Shk</td>
+                <td class="text-left">@cl.Cutting</td>
+                <td class="text-right">@cl.Quantity</td>
+                <td class="text-right">@cl.Price</td>
+                <td class="text-right">@(@cl.Price*@cl.Quantity)</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("returnUrl", Request.Url)
+                        @Html.Hidden("line", cl.Id.ToString())
+                        <input type="submit" class="btn btn-danger" value="Удалить"/>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text-primary text-right">ИТОГ:</td>
+            <td class="text-primary text-right">@Model.Lines.Sum(m => m.Quantity)</td>
+            <td class="text-primary text-right"></td>
+            <td class="text-primary text-right">@Model.Lines.Sum(m=>m.Price*m.Quantity)</td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <div class="text-center">
+        @Html.ActionLink("Оформить заказ", "Checkout", "Cart", new {@class = "btn btn-primary"})
+    </div>
+}
+

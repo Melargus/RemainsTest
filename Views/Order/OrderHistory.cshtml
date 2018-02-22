@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RemainsTest.Models.OrderViewModel>
+
+@{
+    ViewBag.Title = "История заказов";
+}
+
+@if (!Model.Any())
+{
+    <h2 class="text-center info">История пуста</h2>
+}
+
+@foreach (var order in Model)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 class="panel-title text-center">
+                <a data-toggle="collapse" href="#@order.Id">
+                    Заказ номер @order.Id от @order.OrderDate.ToShortDateString() г.
+                </a>
+            </h4>
+        </div>
+        <div id="@order.Id" class="collapse">
+            <div class="panel-body">
+                @foreach (var str in order.OrderInfo.Split(';'))
+                {
+                    <p class="text-center">@str</p>
+                }
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Товар</th>
+                        <th class="text-center">Характеристика</th>
+                        <th class="text-center">Штрихкод</th>
+                        <th class="text-center">Разбивка</th>
+                        <th class="text-center">Количество</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var dd in order.Detail)
+                    {
+                        <tr>
+                            <td class="text-center">@dd.Product</td>
+                            <td class="text-center">@dd.ProductChar</td>
+                            <td class="text-center">@dd.Shk</td>
+                            <td class="text-center">@dd.Cutting</td>
+                            <td class="text-center">@dd.Quantity</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+

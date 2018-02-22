@@ -1,0 +1,68 @@
+﻿@model IEnumerable<RemainsTest.Models.Product>
+
+@{
+    ViewBag.Title = "Список товаров";
+}
+
+<div>
+    @using (Ajax.BeginForm("List", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+        <label class="text-danger warning">Внимание! Остатки продукции обновляются каждые полчаса, остатки могут меняться.</label>
+        <br/>
+        <label class="text-danger warning">В случае отсутствия товара на складе в Москве, поставка в течении 10-15 дней.</label>
+        <br />
+        <label>Артикул:</label>
+        <input type="text" name="search" value="@Session["Search"]"/>
+        <input type="hidden" name="groupId" value="@Session["groupId"]" />
+        <input type="submit" value="Поиск" />
+    }
+
+    <p></p>
+
+    <div id="results">
+        <div class="table">
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Артикул
+                    </th>
+                    <th>
+                        Имя
+                    </th>
+                    @*<th>
+                        Цена, руб.
+                    </th>*@
+                    <th></th>
+                </tr>
+
+
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => p.ProductArticle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => p.ProductName)
+                        </td>
+                        @*<td>
+                            @if (p.ProductPrice == 0)
+                            {
+                                <p>Уточняйте у менеджера</p>
+                            }
+                            else
+                            {
+                               @Html.DisplayFor(modelItem => p.ProductPrice)
+                            }
+                        </td>*@
+                        <td>
+                            @Html.ActionLink("Подробно", "Details", new { id = p.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            </div>
+        </div>
+</div>
+

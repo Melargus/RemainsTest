@@ -1,0 +1,30 @@
+﻿@model RemainsTest.Models.UserCreateModel
+
+@{
+    ViewBag.Title = "Добавление нового пользователя";
+}
+
+<div class="panel-body">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+        <div class="form-group">
+            <label>Контрагент:</label>
+            @Html.TextBoxFor(m => m.Company, new {@class = "form-control width=15%", @placeholder = "Контрагент"})
+        </div>
+        <div class="form-group">
+            <label>ИНН:</label>
+            @Html.TextBoxFor(m => m.Login, new { @class = "form-control width=15%", @placeholder = "ИНН" })
+        </div>
+        <div class="form-group">
+            <label>Пароль:</label>
+            @Html.ValidationMessageFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control width=15%", @placeholder = "Пароль" })
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.PasswordRepeat, new { @class = "form-control width=15%", @placeholder = "Пароль" })
+        </div>
+            <input type="submit" value="Создать пользователя" class="btn btn-primary center-block" />
+    }
+</div>
+

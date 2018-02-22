@@ -1,0 +1,52 @@
+﻿@model List<RemainsTest.Models.ShkModel>
+
+@foreach (var s in Model)
+{
+    <ul>
+        
+            <table class="table table-bordered">
+                <tr>
+                    <td style="max-width: 277px; min-width: 277px">
+                        @Html.Label(s.Shk)
+                    </td>
+                    <td style="max-width: 74px; min-width: 74px">
+                        @Html.Label(s.Remains.ToString())
+                    </td>
+                    <td style="max-width: 166px; min-width: 166px">
+                        <a type="button" data-toggle="modal" data-target="#@s.GetHashCode()" href="#">Заказать</a>
+
+                        <div id="@s.GetHashCode()" class="modal fade" role="dialog">
+                            <div class="modal-dialog modal-m">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">@s.Shk</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @using (Html.BeginForm("AddToCart", "Cart"))
+                                        {
+                                            @Html.Label("Количество: ")
+                                            @Html.TextBox("quantity", "", new { @class = "form-control" })
+                                            <br/>
+                                            @Html.Hidden("productId", 0)
+                                            @Html.Hidden("charId", 0)
+                                            @Html.Hidden("returnUrl", Request.Url)
+                                            @Html.Hidden("shk", s.Shk)
+                                            @Html.Label("Разбивка:   ")
+                                            @Html.TextBox("cutting", "", new { @class = "form-control" })
+                                            <br />
+                                            <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        
+    </ul>
+}

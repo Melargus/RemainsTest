@@ -1,0 +1,21 @@
+﻿@model List<RemainsTest.Models.StockModel>
+
+@foreach (var s in Model)
+{
+    if (s.ShkList.Any())
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title text-center">
+                    <a data-toggle="collapse" href="#@s.CStock.Id@s.ShkList.GetHashCode()">@s.CStock.StockName, свободный остаток
+                        <span class="badge alert-success">@s.ShkList.Sum(ss=>ss.Remains) м</span></a>
+                </h4>
+            </div>
+            <div id="@s.CStock.Id@s.ShkList.GetHashCode()" class="collapse">
+                <div class="panel-body">
+                    @Html.Partial("ShkPartial", s.ShkList)
+                </div>
+            </div>
+        </div>
+    }
+}
