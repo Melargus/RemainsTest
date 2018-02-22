@@ -14,7 +14,7 @@ namespace RemainsTest
     public static void RegisterRoutes(RouteCollection routes)
     {
       routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-      routes.MapRoute("Default", "{controller}/{action}/{id}", (object) new
+      routes.MapRoute("Default", "{controller}/{action}/{id}", new
       {
         controller = "Account",
         action = "Login",
@@ -26,7 +26,7 @@ namespace RemainsTest
         action = "Login",
         id = UrlParameter.Optional
       });
-      routes.MapRoute("details", "products/details", (object) new
+      routes.MapRoute("details", "products/details", new
       {
         controller = "Product",
         action = "Details",

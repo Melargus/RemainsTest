@@ -4,13 +4,12 @@
 // MVID: EDE8023D-7279-40AF-8338-41C7B4F89E43
 // Assembly location: D:\GameDevProjectFile\Архив\mskvipdekor.ru\bin\RemainsTest.dll
 
-using NLog;
-using RemainsTest.Models.EntityModel;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web.Helpers;
 using System.Web.Security;
+using NLog;
+using RemainsTest.Models.EntityModel;
 
 namespace RemainsTest.Providers
 {
@@ -25,13 +24,13 @@ namespace RemainsTest.Providers
       {
         try
         {
-          User user = dataContext.Users.Where<User>((Expression<Func<User, bool>>) (u => u.Login == username)).FirstOrDefault<User>();
+          User user = dataContext.Users.FirstOrDefault(u => u.Login == username);
           if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
             flag = true;
         }
         catch (Exception ex)
         {
-          SimpleMembership.logger.Error(ex.Message);
+          logger.Error(ex.Message);
           flag = false;
         }
       }
@@ -40,23 +39,22 @@ namespace RemainsTest.Providers
 
     public MembershipUser CreateUser(string username, string password, string company)
     {
-      User entity;
+      User entity = null;
       using (DataContext dataContext = new DataContext())
       {
-        entity = new User()
+        entity = new User
         {
           CompanyName = company,
           Login = username,
           Email = username,
           Password = Crypto.HashPassword(password),
-          RoleId = new int?(2)
+          RoleId = 2
         };
         dataContext.Users.Add(entity);
         dataContext.SaveChanges();
       }
-      if (entity == null)
-        return (MembershipUser) null;
-      return new MembershipUser("SimpleProvider", entity.CompanyName, (object) null, entity.Login, (string) null, (string) null, false, false, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+      
+      return new MembershipUser("SimpleProvider", entity.CompanyName, null, entity.Login, null, null, false, false, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
     }
 
     public override MembershipUser GetUser(string login, bool userIsOnline = true)
@@ -65,16 +63,16 @@ namespace RemainsTest.Providers
       {
         using (DataContext dataContext = new DataContext())
         {
-          IQueryable<User> source = dataContext.Users.Where<User>((Expression<Func<User, bool>>) (u => u.Login == login));
-          if (source.Any<User>())
-            return new MembershipUser("SimpleProvider", source.First<User>().CompanyName, (object) null, (string) null, (string) null, (string) null, false, false, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+          IQueryable<User> source = dataContext.Users.Where(u => u.Login == login);
+          if (source.Any())
+            return new MembershipUser("SimpleProvider", source.First().CompanyName, null, null, null, null, false, false, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
       }
       catch (Exception ex)
       {
-        return (MembershipUser) null;
+        return null;
       }
-      return (MembershipUser) null;
+      return null;
     }
 
     public override string ApplicationName
@@ -94,12 +92,12 @@ namespace RemainsTest.Providers
       bool flag = false;
       using (DataContext dataContext = new DataContext())
       {
-        User entity = dataContext.Users.Where<User>((Expression<Func<User, bool>>) (u => u.Login == username)).FirstOrDefault<User>();
+        User entity = dataContext.Users.FirstOrDefault(u => u.Login == username);
         if (entity != null && Crypto.VerifyHashedPassword(entity.Password, oldPassword))
         {
           entity.Password = Crypto.HashPassword(newPassword);
           dataContext.Users.Attach(entity);
-          dataContext.Entry<User>(entity).Property<string>((Expression<Func<User, string>>) (e => e.Password)).IsModified = true;
+          dataContext.Entry(entity).Property(e => e.Password).IsModified = true;
           dataContext.SaveChanges();
           flag = true;
         }
@@ -115,7 +113,7 @@ namespace RemainsTest.Providers
     public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
     {
       status = MembershipCreateStatus.Success;
-      return this.CreateUser(username, password, passwordQuestion);
+      return CreateUser(username, password, passwordQuestion);
     }
 
     public override bool DeleteUser(string username, bool deleteAllRelatedData)
