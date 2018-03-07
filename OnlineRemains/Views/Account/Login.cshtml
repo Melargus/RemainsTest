@@ -1,0 +1,41 @@
+﻿@model OnlineRemains.Models.LogOnModel
+    @{
+        Layout = "";
+    }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Авторизация</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet"/>
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+</head>
+<body>
+<div class="panel panel-info" style="margin: 0 auto; margin-top: 10%; width: 40%">
+    <div class="panel-heading">
+        <div>
+            <h3>Вход в личный кабинет</h3>
+            <img src=""/>
+        </div>
+        
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <div class="form-group">
+                <label>Имя пользователя:</label>
+                @Html.TextBoxFor(m => m.UserName, new {@class = "form-control width=15%", @placeholder = "ИНН" })
+            </div>
+            <div class="form-group">
+                <label>Пароль:</label>
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control width=15%", @placeholder = "Пароль" })
+            </div>
+            <input type="submit" value="Войти" class="btn btn-primary center-block"/>
+        }
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿@using OnlineRemains.Models.EntityModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery-2.2.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script src="~/Scripts/jquery.ui.datepicker-ru"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse" role="navigation">
+        <b class="navbar-brand">Личный кабинет</b>
+    </div>
+
+    <div class="row panel">
+        <div id="menu" class="col-xs-3">
+            <ul class="nav nav-pills nav-stacked table-bordered">
+                <li>
+                    <p><span class="glyphicon glyphicon-user"></span> 
+                        <span>@Membership.Provider.GetUser(HttpContext.Current.User.Identity.Name, true).UserName</span>
+                    </p>  
+                </li>
+                <li>
+                    <p>@Html.ActionLink("Список товаров", "List", "Product", new {groupId = 0}, null)</p>
+                    <ul>
+                        <li>@Html.ActionLink("Ткани", "List", "Product", new {groupId = "1"}, null)</li>
+                        <li>@Html.ActionLink("Аксессуары-Canavar(бахрома)", "List", "Product", new {groupId = 2}, null)</li>
+                        <li>@Html.ActionLink("Аксессуары-ikon(NEW)", "List", "Product", new {groupId = 3}, null)</li>
+                        <li>@Html.ActionLink("Аксессуары-VENTO", "List", "Product", new {groupId = 4}, null)</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>@Html.ActionLink("История заказов","OrderHistory","Order")</p>
+                </li>
+                <li>
+                    <p class="text-justify">@Html.ActionLink("Корзина", "Index", "Cart")
+                    @if (Session["Cart"] == null)
+                    {
+                        <span class="badge alert-danger">Пусто</span>
+                    }
+                    else
+                    {
+                        if (!((Cart)Session["Cart"]).Lines.Any())
+                        {
+                            <span class="badge alert-danger">Пусто</span>
+                        }
+                        else
+                        {
+                            <span class="badge alert-success">@(((Cart)Session["Cart"]).Lines.Count())</span>
+                        }
+                    }</p>
+                </li>
+                @*<li>
+                    <p>@Html.ActionLink("Настройки", "ChangePassword", "Account")</p>
+                </li>*@
+                <li>
+                    <p>@Html.ActionLink("Выйти", "LogOff", "Account")</p>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-8">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

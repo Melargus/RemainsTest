@@ -1,0 +1,71 @@
+﻿@model OnlineRemains.Models.ProductDetailsModel
+
+@{
+    ViewBag.Title = Model.Parent.ProductName;
+}
+
+<div class="panel panel-primary">
+    <p class="left">@Html.ActionLink(" << Вернуться в список товаров", "List", new {groupId = Session["groupId"] })</p>
+    <div class="panel-heading">Арт.@Model.Parent.ProductArticle, @Model.Parent.ProductName. Цена @Model.Price руб.</div>
+    <div id="ctree" class="panel-body">
+        <ul id="tree">
+            @foreach (var m in Model.ProductCharsList)
+            {
+
+                <li class="list-group-item">
+                    <div class="text-center">
+                        <h4 class="text-center">
+                            Цвет @m.Characteristic.ProductCharName, свободный остаток 
+                            @if (m.TotalRemains > 0)
+                            {
+                                <p class="badge alert-success">@m.TotalRemains м</p>
+                            }
+                            else
+                            {
+                                <p class="badge alert-danger">0 м</p>
+                            }
+                            <a type="button" data-toggle="modal" data-target="#@m.Characteristic.Id" href="#">Заказать</a>
+                        </h4>
+                    </div>
+
+                    <div id="@m.Characteristic.Id" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-m">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">@Model.Parent.ProductName, @m.Characteristic.ProductCharName</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @using (Html.BeginForm("AddToCart", "Cart"))
+                                    {
+                                        @Html.Label("Количество: ")
+                                        @Html.TextBox("quantity", "", new {@class = "form-control"})
+                                        <br/>
+                                        @Html.Hidden("productId", Model.Parent.Id)
+                                        @Html.Hidden("charId", m.Characteristic.Id)
+                                        @Html.Hidden("returnUrl", Request.Url)
+                                        @Html.Hidden("shk", "")
+                                        @Html.Label("Разбивка:   ")
+                                        @Html.TextBox("cutting", "", new {@class = "form-control"})
+                                        <br/>
+                                        <input type="submit" class="btn btn-success" value="Добавить в корзину"/>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @if (m.StockList.Any())
+                    {
+                        @Html.Partial("StockPartial", m.StockList)
+                    }
+                </li>
+
+            }
+        </ul>
+
+    </div>
+</div>
